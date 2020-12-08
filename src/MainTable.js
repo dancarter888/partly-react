@@ -12,20 +12,11 @@ class MainTable extends React.Component {
     }
   }
 
-  handleChange = (totals, index, addition) => {
-    let items = [...totals];
-    let item = {...items[index]};
-    item += addition;
-    items[index] = item;
-    this.setState({items});
-  }
-
   componentDidMount = () => {
     let rows = this.props.rows;
     let cols = this.props.cols;
-
-    this.setState({rowTotals: new Array(rows).fill(0)});
-    this.setState({colTotals: new Array(cols).fill(0)});
+    let rowTotals = new Array(rows).fill(0);
+    let colTotals = new Array(cols).fill(0);
     for (let row = 0; row < rows; row++) {
       if (!$(`#r${row}`).length) {
         $('#main-table').append(`<tr id="r${row}"></tr>`);
@@ -34,10 +25,18 @@ class MainTable extends React.Component {
         if (!$(`#r${row}c${col}`).length) {
           $(`#r${row}`).append(`<td class="c${col}" id="r${row}c${col}"><input type="number" value="${this.state.table[row][col]}"></td>`);
         }
-        this.handleChange(this.state.colTotals, col, this.state.table[row][col]);
-        this.handleChange(this.state.rowTotals, row, this.state.table[row][col]);
+        rowTotals[row] += this.state.table[row][col];
+        colTotals[col] += this.state.table[row][col];
       }
-    }   
+    }
+    for (let row in rowTotals){
+      $(`#r${row}`).append(`<td class="row-totals" id="r${row}-total"><input type="number" value="${rowTotals[row]}"></td>`);
+    }
+
+    $('#main-table').append(`<tr id="col-totals"></tr>`);
+    for (let col in colTotals){
+      $(`#col-totals`).append(`<td id="c${col}-total"><input type="number" value="${colTotals[col]}"></td>`);
+    }
   }
 
 
@@ -53,3 +52,4 @@ class MainTable extends React.Component {
 }
 
 export default MainTable;
+
