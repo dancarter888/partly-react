@@ -12,18 +12,26 @@ input:read-only {
     background-color: gray;
 }
 
-#main-container {
-    transform: 'translate(-50%, -50%)';
-    display: flex;
-    align-items: flex-start;
-    justify-content: right;
-}
-
-table, td, th {
+table, td{
     border: 1px solid black;
-  }
+}
   
 table {
-    width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
+    width: 200px;
+}
+
+td {
+  border: 1px solid black;
+  width: 100px;
+  overflow: hidden;
+}
+
+.addButton {
+    background-image: url('./assets/addButton.jpg'); 
+            background-size: cover; 
+            width: auto; 
+            height: auto; 
+            border: 0;
 }

@@ -1,10 +1,6 @@
 
 import React from 'react';
 import './MainTable.css';
-import Table from 'react-bootstrap/Table'
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 class MainTable extends React.Component {
   constructor() {
@@ -60,31 +56,27 @@ class MainTable extends React.Component {
         <tr key={rowIndex}>{row.map((col, colIndex) => {
           return <td key={'r'+rowIndex+'c'+colIndex}><input type="number" value={row[colIndex]} onChange={(e) => {this.handleChange(e, rowIndex, colIndex)}}/></td>
         })}
-        <td class='totals' key='row-totals'><input readOnly type="number" value={rowTotals[rowIndex]}/></td>
+        <td className='totals' key='row-totals'><input readOnly type="number" value={rowTotals[rowIndex]}/></td>
         </tr>
       )
     })}
     <tr>{this.state.table[0].map((col, colIndex) => {
-      return <td class='totals' key={colIndex+'col-totals'}><input readOnly type="number" value={colTotals[colIndex]}/></td>
+      return <td className='totals' key={colIndex+'col-totals'}><input readOnly type="number" value={colTotals[colIndex]}/></td>
     })}
-      <td class='totals' key={'all-totals'}><input readOnly type="number" value={rowTotals.reduce((a, b) => a + b)}/></td>
+      <td className='totals' key={'all-totals'}><input readOnly type="number" value={rowTotals.reduce((a, b) => a + b)}/></td>
     </tr>
     </tbody>)
   }
 
   render() {
     return (
-      <Container id='main-container'>
-        <Row>
-          <Col md={10}>
-            <table >
-              {this.renderTable()}
-            </table>
-            <button onClick={this.addRow}>+Row</button>
-          </Col>
-          <Col><button onClick={this.addCol}>+Col</button></Col>
-        </Row>
-      </Container>
+      <div>
+      <table >
+        {this.renderTable()}
+      </table>
+      <button className="addButton" onClick={this.addRow}>+Row</button>
+      <button className="addButton" onClick={this.addCol}>+Col</button>
+      </div>
     );
   }
   
