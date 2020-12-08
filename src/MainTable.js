@@ -14,13 +14,27 @@ class MainTable extends React.Component {
     let table = this.state.table;
     let cols = this.state.table[0].length;
     table.push(new Array(cols).fill(0));
-    console.log(table);
     $('.row-totals').remove();
     $('#col-totals').remove();
-    this.setState({table: table}, () => console.log(table));
+    this.setState({table: table}, this.setupTable());
+  }
+
+  addCol = () => {
+    let table = this.state.table;
+    let rows = this.state.table.length;
+    for (let row = 0; row < rows; row++) {
+      table[row].push(0);
+    }
+    $('.row-totals').remove();
+    $('#col-totals').remove();
+    this.setState({table: table}, this.setupTable());
   }
 
   componentDidMount = () => {
+    this.setupTable();
+  }    
+
+  setupTable = () => {
     let rows = this.state.table.length;
     let cols = this.state.table[0].length;
     let rowTotals = new Array(rows).fill(0);
@@ -52,6 +66,7 @@ class MainTable extends React.Component {
       <div>
         <table id="main-table"></table>
         <button onClick={this.addRow}>+Row</button>
+        <button onClick={this.addCol}>+Col</button>
       </div>
     );
   }
