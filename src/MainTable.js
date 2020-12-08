@@ -1,6 +1,5 @@
 
 import React from 'react';
-import $ from 'jquery';
 
 class MainTable extends React.Component {
   constructor(props) {
@@ -18,9 +17,7 @@ class MainTable extends React.Component {
     let table = this.state.table;
     let cols = this.state.table[0].length;
     table.push(new Array(cols).fill(0));
-    $('.row-totals').remove();
-    $('#col-totals').remove();
-    this.setState({table: table}, this.setupTable());
+    this.setState({table: table});
   }
 
   addCol = () => {
@@ -29,47 +26,45 @@ class MainTable extends React.Component {
     for (let row = 0; row < rows; row++) {
       table[row].push(0);
     }
-    $('.row-totals').remove();
-    $('#col-totals').remove();
-    this.setState({table: table}, this.setupTable());
+    this.setState({table: table});
   }
 
-  componentDidMount = () => {
-    this.setupTable();
-  }    
-
-  setupTable = () => {
+  calcTotals = () => {
     let rows = this.state.table.length;
     let cols = this.state.table[0].length;
     let rowTotals = new Array(rows).fill(0);
     let colTotals = new Array(cols).fill(0);
     for (let row = 0; row < rows; row++) {
-      if (!$(`#r${row}`).length) {
-        $('#main-table').append(`<tr id="r${row}"></tr>`);
-      }
       for (let col = 0; col < cols; col++) {
-        if (!$(`#r${row}c${col}`).length) {
-          $(`#r${row}`).append(`<td class="c${col}" id="r${row}c${col}"><input type="number" value="${this.state.table[row][col]}" onChange="{(e) => this.handleChange(e)}"}></td>`);
-        }
         rowTotals[row] += this.state.table[row][col];
         colTotals[col] += this.state.table[row][col];
       }
     }
-    for (let row in rowTotals){
-      $(`#r${row}`).append(`<td class="row-totals" id="r${row}-total"><input readOnly type="number" value="${rowTotals[row]}"></td>`);
-    }
+    return [rowTotals, colTotals];
+  }
 
-    $('#main-table').append(`<tr id="col-totals"></tr>`);
-    for (let col in colTotals){
-      $(`#col-totals`).append(`<td id="c${col}-total"><input readOnly type="number" value="${colTotals[col]}"></td>`);
-    }
+  renderTable = () => {
+    let [rowTotals, colTotals] = this.calcTotals();
+
+    return (<div>{this.state.table.map((row, rowIndex) => {
+      return (
+        <tr>{row.map((col, colIndex) => {
+          return <td><input type="number" value={row[colIndex]}/></td>
+        })}
+        <td><input readOnly type="number" value={rowTotals[rowIndex]}/></td>
+        </tr>
+      )
+    })}
+    <tr>{this.state.table[0].map((col, colIndex) => {
+      return <td><input readOnly type="number" value={colTotals[colIndex]}/></td>
+    })}</tr>
+    </div>)
   }
 
   render() {
     return (
       <div>
-        <table id="main-table">
-        </table>
+        {this.renderTable()}
         <button onClick={this.addRow}>+Row</button>
         <button onClick={this.addCol}>+Col</button>
       </div>
