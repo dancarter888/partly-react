@@ -7,14 +7,22 @@ class MainTable extends React.Component {
     super(props);
     this.state = {
       table: [[1,2], [1,2]],
-      rowTotals: [0, 0],
-      colTotals: [0, 0]
     }
   }
 
+  addRow = () => {
+    let table = this.state.table;
+    let cols = this.state.table[0].length;
+    table.push(new Array(cols).fill(0));
+    console.log(table);
+    $('.row-totals').remove();
+    $('#col-totals').remove();
+    this.setState({table: table}, () => console.log(table));
+  }
+
   componentDidMount = () => {
-    let rows = this.props.rows;
-    let cols = this.props.cols;
+    let rows = this.state.table.length;
+    let cols = this.state.table[0].length;
     let rowTotals = new Array(rows).fill(0);
     let colTotals = new Array(cols).fill(0);
     for (let row = 0; row < rows; row++) {
@@ -39,13 +47,12 @@ class MainTable extends React.Component {
     }
   }
 
-
-
   render() {
     return (
-      <table id="main-table">
-        
-      </table>
+      <div>
+        <table id="main-table"></table>
+        <button onClick={this.addRow}>+Row</button>
+      </div>
     );
   }
   
