@@ -5,12 +5,15 @@ class MainTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      table: [[1,2], [1,2]],
+      table: [[0,0], [0,0]],
     }
   }
 
-  handleChange = (e) => {
-    console.log(e);
+  handleChange = (e, rowIndex, colIndex) => {
+    let table = this.state.table;
+    table[rowIndex][colIndex] = parseInt(e.target.value);
+    console.log(e.target.value);
+    this.setState({table: table});    
   }
 
   addRow = () => {
@@ -49,7 +52,7 @@ class MainTable extends React.Component {
     return (<div>{this.state.table.map((row, rowIndex) => {
       return (
         <tr>{row.map((col, colIndex) => {
-          return <td><input type="number" value={row[colIndex]}/></td>
+          return <td><input type="number" value={row[colIndex]} onChange={(e) => {this.handleChange(e, rowIndex, colIndex)}}/></td>
         })}
         <td><input readOnly type="number" value={rowTotals[rowIndex]}/></td>
         </tr>
