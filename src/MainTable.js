@@ -66,7 +66,9 @@ class MainTable extends React.Component {
     })}
     <tr>{this.state.table[0].map((col, colIndex) => {
       return <td class='totals' key={colIndex+'col-totals'}><input readOnly type="number" value={colTotals[colIndex]}/></td>
-    })}</tr>
+    })}
+      <td class='totals' key={'all-totals'}><input readOnly type="number" value={rowTotals.reduce((a, b) => a + b)}/></td>
+    </tr>
     </tbody>)
   }
 
@@ -75,9 +77,9 @@ class MainTable extends React.Component {
       <Container id='main-container'>
         <Row>
           <Col md={10}>
-            <Table bordered size='sm'>
-            {this.renderTable()}
-            </Table>
+            <table >
+              {this.renderTable()}
+            </table>
             <button onClick={this.addRow}>+Row</button>
           </Col>
           <Col><button onClick={this.addCol}>+Col</button></Col>

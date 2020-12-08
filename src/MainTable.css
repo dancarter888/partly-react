@@ -5,6 +5,7 @@ input {
 
 input:read-only {
     background-color: transparent;
+    font-weight: bold;
 }
 
 .totals {
@@ -16,4 +17,13 @@ input:read-only {
     display: flex;
     align-items: flex-start;
     justify-content: right;
+}
+
+table, td, th {
+    border: 1px solid black;
+  }
+  
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
