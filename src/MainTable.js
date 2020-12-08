@@ -10,6 +10,10 @@ class MainTable extends React.Component {
     }
   }
 
+  handleChange = (e) => {
+    console.log(e);
+  }
+
   addRow = () => {
     let table = this.state.table;
     let cols = this.state.table[0].length;
@@ -45,26 +49,27 @@ class MainTable extends React.Component {
       }
       for (let col = 0; col < cols; col++) {
         if (!$(`#r${row}c${col}`).length) {
-          $(`#r${row}`).append(`<td class="c${col}" id="r${row}c${col}"><input type="number" value="${this.state.table[row][col]}"></td>`);
+          $(`#r${row}`).append(`<td class="c${col}" id="r${row}c${col}"><input type="number" value="${this.state.table[row][col]}" onChange="{(e) => this.handleChange(e)}"}></td>`);
         }
         rowTotals[row] += this.state.table[row][col];
         colTotals[col] += this.state.table[row][col];
       }
     }
     for (let row in rowTotals){
-      $(`#r${row}`).append(`<td class="row-totals" id="r${row}-total"><input type="number" value="${rowTotals[row]}"></td>`);
+      $(`#r${row}`).append(`<td class="row-totals" id="r${row}-total"><input readOnly type="number" value="${rowTotals[row]}"></td>`);
     }
 
     $('#main-table').append(`<tr id="col-totals"></tr>`);
     for (let col in colTotals){
-      $(`#col-totals`).append(`<td id="c${col}-total"><input type="number" value="${colTotals[col]}"></td>`);
+      $(`#col-totals`).append(`<td id="c${col}-total"><input readOnly type="number" value="${colTotals[col]}"></td>`);
     }
   }
 
   render() {
     return (
       <div>
-        <table id="main-table"></table>
+        <table id="main-table">
+        </table>
         <button onClick={this.addRow}>+Row</button>
         <button onClick={this.addCol}>+Col</button>
       </div>
