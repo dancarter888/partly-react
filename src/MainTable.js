@@ -1,5 +1,10 @@
 
 import React from 'react';
+import './MainTable.css';
+import Table from 'react-bootstrap/Table'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class MainTable extends React.Component {
   constructor() {
@@ -55,25 +60,29 @@ class MainTable extends React.Component {
         <tr key={rowIndex}>{row.map((col, colIndex) => {
           return <td key={'r'+rowIndex+'c'+colIndex}><input type="number" value={row[colIndex]} onChange={(e) => {this.handleChange(e, rowIndex, colIndex)}}/></td>
         })}
-        <td key='row-totals'><input readOnly type="number" value={rowTotals[rowIndex]}/></td>
+        <td class='totals' key='row-totals'><input readOnly type="number" value={rowTotals[rowIndex]}/></td>
         </tr>
       )
     })}
     <tr>{this.state.table[0].map((col, colIndex) => {
-      return <td key={colIndex+'col-totals'}><input readOnly type="number" value={colTotals[colIndex]}/></td>
+      return <td class='totals' key={colIndex+'col-totals'}><input readOnly type="number" value={colTotals[colIndex]}/></td>
     })}</tr>
     </tbody>)
   }
 
   render() {
     return (
-      <div>
-        <table>
-          {this.renderTable()}
-        </table>
-        <button onClick={this.addRow}>+Row</button>
-        <button onClick={this.addCol}>+Col</button>
-      </div>
+      <Container id='main-container'>
+        <Row>
+          <Col md={10}>
+            <Table bordered size='sm'>
+            {this.renderTable()}
+            </Table>
+            <button onClick={this.addRow}>+Row</button>
+          </Col>
+          <Col><button onClick={this.addCol}>+Col</button></Col>
+        </Row>
+      </Container>
     );
   }
   
