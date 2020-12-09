@@ -13,9 +13,13 @@ class MainTable extends React.Component {
 
   handleChange = (e, rowIndex, colIndex) => {
     let table = this.state.table;
-    let newVal = parseInt(e.target.value);
-    table[rowIndex][colIndex] = newVal;
-    console.log(e.target.value);
+    let newVal;
+    if (e.target.value === '') {
+      newVal = 0;
+    } else {
+      newVal = e.target.value;
+    }
+    table[rowIndex][colIndex] = Number(newVal).toString();
     this.setState({table: table});    
   }
 
@@ -42,8 +46,8 @@ class MainTable extends React.Component {
     let colTotals = new Array(cols).fill(0);
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
-        rowTotals[row] += this.state.table[row][col];
-        colTotals[col] += this.state.table[row][col];
+        rowTotals[row] += parseInt(this.state.table[row][col]);
+        colTotals[col] += parseInt(this.state.table[row][col]);
       }
     }
     return [rowTotals, colTotals];
@@ -72,6 +76,7 @@ class MainTable extends React.Component {
   render() {
     return (
       <div>
+        <Container></Container>
         <div id ="table-and-addCol">
           <table >
             {this.renderTable()}
