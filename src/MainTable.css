@@ -28,10 +28,28 @@ td {
   overflow: hidden;
 }
 
-.addButton {
+.addButton, .addButton:focus {
     background-image: url('./assets/addButton.jpg'); 
-            background-size: cover; 
-            width: auto; 
-            height: auto; 
-            border: 0;
+    background-size: cover; 
+    width: 40px; 
+    height: 40px; 
+    border: none;
+    outline:none;
+    cursor: pointer;
+    padding-right: 34px;
+}
+
+.addButton:hover {
+    background-image: url('./assets/addButton2.jpg'); 
+    background-size: cover; 
+    width: 40px; 
+    height: 40px; 
+    border: none;
+    outline:none;
+    cursor: pointer;
+    padding-right: 32px;
+}
+
+#table-and-addCol {
+    display: flex; 
 }

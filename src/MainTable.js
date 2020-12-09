@@ -1,6 +1,7 @@
 
 import React from 'react';
 import './MainTable.css';
+import {Container, Row, Col} from 'react-bootstrap';
 
 class MainTable extends React.Component {
   constructor() {
@@ -71,11 +72,13 @@ class MainTable extends React.Component {
   render() {
     return (
       <div>
-      <table >
-        {this.renderTable()}
-      </table>
-      <button className="addButton" onClick={this.addRow}>+Row</button>
-      <button className="addButton" onClick={this.addCol}>+Col</button>
+        <div id ="table-and-addCol">
+          <table >
+            {this.renderTable()}
+          </table>
+          <button className='addButton' id='addCol' onClick={this.addCol} />
+        </div>
+        <button className='addButton' id='addRow' onClick={this.addRow} />
       </div>
     );
   }
