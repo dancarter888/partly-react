@@ -1,7 +1,8 @@
 
 import React from 'react';
 import './MainTable.css';
-import {Container, Row, Col} from 'react-bootstrap';
+import appLogo from './assets/APP.png';
+import Navbar from 'react-bootstrap/Navbar';
 
 class MainTable extends React.Component {
   constructor() {
@@ -76,7 +77,12 @@ class MainTable extends React.Component {
   render() {
     return (
       <div>
-        <Container></Container>
+        <Navbar bg="dark" variant="dark" expand="lg">
+          <Navbar.Brand href="#home"><img alt='APP' src={appLogo} /></Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+          </Navbar.Collapse>
+        </Navbar>
         <div id ="table-and-addCol">
           <table >
             {this.renderTable()}
